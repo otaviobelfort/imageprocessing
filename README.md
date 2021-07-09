@@ -1,1 +1,1 @@
-# imageprocessing
+# Image Processing Design
