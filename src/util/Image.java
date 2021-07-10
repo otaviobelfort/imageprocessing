@@ -181,7 +181,7 @@ class IFrame extends JFrame {
 
         @Override
         public Dimension getPreferredSize() {
-            return new Dimension(img.getLargura(), img.getAltura());
+            return new Dimension(img.getWidth(), img.getHeight());
         }
 
         @Override
@@ -220,9 +220,9 @@ class IFrame extends JFrame {
         super(titulo);
         scroll = new JScrollPane(new GCanvas(img));
         scroll.getVerticalScrollBar().setUnitIncrement(16);
-        scroll.setMaximumSize(new Dimension(img.getLargura(), img.getAltura()));
+        scroll.setMaximumSize(new Dimension(img.getWidth(), img.getHeight()));
         getContentPane().add(scroll);
-        setSize(img.getLargura() + 20, img.getAltura() + 45);
+        setSize(img.getWidth() + 20, img.getHeight() + 45);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocation(incremento, incremento);
         setVisible(true);
