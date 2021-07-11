@@ -15,13 +15,13 @@ public class Main {
 
     public static void main(String args[]) {
         //viewImage();
-        rgbToGray();
+        //rgbToGray();
         //grayToRgb();
-        //imgQuantize(); 
+        imgQuantize(); 
         //imgSum();
         //imgSubtraction();
         //imgMedia();
-        imgNot();
+        //imgNot();
     }
 
     //View images
@@ -76,6 +76,12 @@ public class Main {
     private static void imgQuantize() {
         Image imgGray = new Image(Main.Image_MASSA);
         imgGray.titleImage("Image gray");
+
+        Image bin = Processador.quantize(imgGray, 256, 2);
+        bin.titleImage(" Image Quantize 02");
+        Processador.print(bin);
+        
+        /*
         Processador.quantize(imgGray, 256, 2).titleImage("Image quantizada 2");
         Processador.quantize(imgGray, 256, 3).titleImage("Image quantizada 3");
         Processador.quantize(imgGray, 256, 4).titleImage("Image quantizada 4");
@@ -88,7 +94,7 @@ public class Main {
         Processador.quantize(imgRGB, 256, 4).titleImage("Image quantizada 4");
         Processador.quantize(imgRGB, 256, 8).titleImage("Image quantizada 8");
         Processador.quantize(imgRGB, 256, 16).titleImage("Image quantizada 16");
-
+        */
     }
 
     private static void imgSum() {

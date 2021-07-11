@@ -97,4 +97,25 @@ public class Processador {
         return new Image(matOut);
     }
 
+    public static void print(Image imgA){
+        int matA[][][] = imgA.getMatriz();
+        int qntCanais = imgA.getChannel(); 
+        int alt = imgA.getHeight();
+        int larg = imgA.getWidth();
+        int cor;
+        String out = "";
+        for (int c = 0; c < qntCanais; c++) {
+            for (int y = 0; y < alt; y++) {
+                for (int x = 0; x < larg; x++) {
+                    cor = matA[c][y][x];
+                    out+=cor+ " ";
+                }
+                out+="\n";
+            }
+            out+="\n";
+        }
+        System.out.println(out);
+    }
+     
+
 }

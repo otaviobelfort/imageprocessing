@@ -29,6 +29,7 @@ public final class Image{
     public Image(String path) {
         try {
             image = ImageIO.read(new File(path));
+            // percorrer as matrizes
             raster = image.getRaster();
             type = image.getType();
             height = image.getHeight();
