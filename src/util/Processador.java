@@ -26,6 +26,7 @@ public class Processador {
         int qntCanais = imgA.getChannel(); //rgb ou gray
         int alt = imgA.getHeight();
         int larg = imgA.getWidth();
+        // evitar passar o limite superio 255
         int corSoma;
         int matOut[][][] = new int[qntCanais][alt][larg];
         for (int c = 0; c < qntCanais; c++) {

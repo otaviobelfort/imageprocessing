@@ -57,10 +57,18 @@ public void titleImage()
 ```
 
 * ``` Metedos -> Atividade PDI ``` 
-- Fazer a Media de n imagens
+- Fazer a Media de n imagens 29min
 
 ``` 
 ```
+* ``` Class Histograma ``` 
+#### imgEqualization() < call  process>
+- calulateHistogram
+- calulateHistogramAcum
+- calulateTransfomation
+- getImage
+
+
 
 ``` 
 ```

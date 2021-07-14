@@ -1,4 +1,5 @@
 
+import util.Histogram;
 import util.Image;
 import util.Processador;
 
@@ -11,17 +12,20 @@ public class Main {
     static String Image_OLHO = "imagens/olho.png";
     static String Image_TESTE = "imagens/teste.png";
     static String Image_MASSA = "imagens/massa.jpg";
+    static String Image_CINZA2 = "imagens/cinza2.jpg";
+
     
 
     public static void main(String args[]) {
         //viewImage();
         //rgbToGray();
         //grayToRgb();
-        imgQuantize(); 
+        //imgQuantize(); 
         //imgSum();
         //imgSubtraction();
         //imgMedia();
         //imgNot();
+        imgEqualization();
     }
 
     //View images
@@ -129,5 +133,15 @@ public class Main {
         Image imgC = Processador.not(imgA);
         imgA.titleImage("Image A");
         imgC.titleImage("Não A");
+    }
+
+    private static void imgEqualization() {
+        //Image imgA = new Image("imagens/cinza2.png");
+        Image imgA = new Image("imagens/lenna.jpg");
+        Histogram hist = new Histogram(imgA);
+        Image imgB = hist.getImage();
+        imgA.titleImage("Image A");
+        imgB.titleImage("Image B - Equalized");
+        imgB.save("Image B Quantize", "imagens_out/");
     }
 }
