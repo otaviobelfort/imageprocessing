@@ -2,6 +2,7 @@
 import util.Histogram;
 import util.Image;
 import util.Processador;
+import util.Stretchin;
 
 public class Main {
 
@@ -25,7 +26,8 @@ public class Main {
         //imgSubtraction();
         //imgMedia();
         //imgNot();
-        imgEqualization();
+        //imgEqualization();
+        imgStretchin();
     }
 
     //View images
@@ -34,6 +36,8 @@ public class Main {
         Image imgB = new Image(Main.Image_B);
         Image imgC = new Image(Main.Image_LENNA);
         Image imgD = new Image(Main.Image_OLHO);
+        Image imgE = new Image(Main.Image_MASSA);
+
         imgA.titleImage("Image A");
         imgB.titleImage("Image B");
         imgC.titleImage("Image C");
@@ -143,5 +147,19 @@ public class Main {
         imgA.titleImage("Image A");
         imgB.titleImage("Image B - Equalized");
         imgB.save("Image B Quantize", "imagens_out/");
+    }
+    //26.m
+    private static void imgStretchin(){
+        Image imgE = new Image(Main.Image_MASSA);
+        imgE.titleImage("Imagem MASSA");
+        //Stretchin img1 = new Stretchin();
+        
+        Stretchin.linear(imgE, 1.4f, 10f).titleImage("Imagem MASSA 1.4");
+        Stretchin.linear(imgE, 1.6f, 0f).titleImage("Imagem MASSA 1.2");
+        Stretchin.linear(imgE, 0.2f, 20f).titleImage("Imagem MASSA 0.2");
+
+        Stretchin.minMax(Stretchin.linear(imgE, 1.4f, 10f)).titleImage("Imagem MASSA 1.4");
+        Stretchin.minMax(Stretchin.linear(imgE, 1.6f, 0f)).titleImage("Imagem MASSA 1.2");
+        Stretchin.minMax(Stretchin.linear(imgE, 0.2f, 20f)).titleImage("Imagem MASSA 0.2");
     }
 }
