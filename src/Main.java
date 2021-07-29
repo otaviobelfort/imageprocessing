@@ -148,7 +148,7 @@ public class Main {
         imgB.titleImage("Image B - Equalized");
         imgB.save("Image B Quantize", "imagens_out/");
     }
-    //26.m
+    //26.m'
     private static void imgStretchin(){
         Image imgE = new Image(Main.Image_MASSA);
         imgE.titleImage("Imagem MASSA");

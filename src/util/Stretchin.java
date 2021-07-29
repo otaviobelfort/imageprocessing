@@ -50,7 +50,7 @@ public class Stretchin {
             for(int y = 0; y < alt; y++){
                 for(int x = 0; x < larg; x++){
                     color = matIn[c][y][x];
-                    matOut[c][y][x] = (color-min)*255 /(max - min);
+                    matOut[c][y][x] = ((color-min)*255) /(max - min);
                 }
             }
         }
