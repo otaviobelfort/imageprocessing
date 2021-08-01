@@ -135,11 +135,11 @@ public final class Image{
         }
     }
 
-    public void titleImage(String title) {
+    public void viewImage(String title) {
         new IFrame(title, this).setVisible(true);
     }
 
-    public void titleImage() {
+    public void viewImage() {
         new IFrame("", this).setVisible(true);
     }
 }

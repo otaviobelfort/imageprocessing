@@ -1,6 +1,8 @@
 
+import util.Dithering;
 import util.Histogram;
 import util.Image;
+import util.MorfologiaBin;
 import util.Processador;
 import util.Stretchin;
 
@@ -18,7 +20,7 @@ public class Main {
     
 
     public static void main(String args[]) {
-        //viewImage();
+        //viewImg();
         //rgbToGray();
         //grayToRgb();
         //imgQuantize(); 
@@ -27,27 +29,29 @@ public class Main {
         //imgMedia();
         //imgNot();
         //imgEqualization();
-        imgStretchin();
+        //imgStretchin();
+        imgDithering();
+        imgMorfologiaBin();
     }
 
     //View images
-    private static void viewImage() {
+    private static void viewImg() {
         Image imgA = new Image(Main.Image_A);
         Image imgB = new Image(Main.Image_B);
         Image imgC = new Image(Main.Image_LENNA);
         Image imgD = new Image(Main.Image_OLHO);
         Image imgE = new Image(Main.Image_MASSA);
 
-        imgA.titleImage("Image A");
-        imgB.titleImage("Image B");
-        imgC.titleImage("Image C");
-        imgD.titleImage();
+        imgA.viewImage("Image A");
+        imgB.viewImage("Image B");
+        imgC.viewImage("Image C");
+        imgD.viewImage();
     }
 
     //transforms an RGB image to GRAY and modifies this image
     private static void rgbToGray() {
         Image imgRGB = new Image(Main.Image_LENNA);
-        imgRGB.titleImage("Image RGB");
+        imgRGB.viewImage("Image RGB");
 
         // toGray in class Image
         Image imgGray = imgRGB.toGray();
@@ -59,13 +63,13 @@ public class Main {
         }
         // a Image deve ser atualizada
         imgGray.setMatriz(mat);
-        imgGray.titleImage("Lenna Cinza Modificada com uma linha");
+        imgGray.viewImage("Lenna Cinza Modificada com uma linha");
     }
 
     //transforma uma Image GRAY em RGB e modifica esta Image
     private static void grayToRgb() {
         Image imgGray = new Image(Main.Image_OLHO);
-        imgGray.titleImage("Image gray");
+        imgGray.viewImage("Image gray");
         Image imgRGB = imgGray.toRGB();
 
         //todas as modificações devem ocorrer numa matriz[alt][larg][canais]
@@ -77,31 +81,31 @@ public class Main {
         }
         // a Image deve ser atualizada
         imgRGB.setMatriz(mat);
-        imgRGB.titleImage("Image RGB modificada");
+        imgRGB.viewImage("Image RGB modificada");
         imgRGB.save("c:/teste/olho_reta.jpg", Image.JPEG);
     }
 
     private static void imgQuantize() {
         Image imgGray = new Image(Main.Image_MASSA);
-        imgGray.titleImage("Image gray");
+        imgGray.viewImage("Image gray");
 
         Image bin = Processador.quantize(imgGray, 256, 2);
-        bin.titleImage(" Image Quantize 02");
+        bin.viewImage(" Image Quantize 02");
         Processador.print(bin);
         
         /*
-        Processador.quantize(imgGray, 256, 2).titleImage("Image quantizada 2");
-        Processador.quantize(imgGray, 256, 3).titleImage("Image quantizada 3");
-        Processador.quantize(imgGray, 256, 4).titleImage("Image quantizada 4");
-        Processador.quantize(imgGray, 256, 8).titleImage("Image quantizada 8");
-        Processador.quantize(imgGray, 256, 16).titleImage("Image quantizada 16");
+        Processador.quantize(imgGray, 256, 2).viewImage("Image quantizada 2");
+        Processador.quantize(imgGray, 256, 3).viewImage("Image quantizada 3");
+        Processador.quantize(imgGray, 256, 4).viewImage("Image quantizada 4");
+        Processador.quantize(imgGray, 256, 8).viewImage("Image quantizada 8");
+        Processador.quantize(imgGray, 256, 16).viewImage("Image quantizada 16");
 
         Image imgRGB = new Image(Main.Image_LENNA);
-        imgRGB.titleImage("Image RGB");
-        Processador.quantize(imgRGB, 256, 2).titleImage("Image quantizada 2");
-        Processador.quantize(imgRGB, 256, 4).titleImage("Image quantizada 4");
-        Processador.quantize(imgRGB, 256, 8).titleImage("Image quantizada 8");
-        Processador.quantize(imgRGB, 256, 16).titleImage("Image quantizada 16");
+        imgRGB.viewImage("Image RGB");
+        Processador.quantize(imgRGB, 256, 2).viewImage("Image quantizada 2");
+        Processador.quantize(imgRGB, 256, 4).viewImage("Image quantizada 4");
+        Processador.quantize(imgRGB, 256, 8).viewImage("Image quantizada 8");
+        Processador.quantize(imgRGB, 256, 16).viewImage("Image quantizada 16");
         */
     }
 
@@ -109,34 +113,34 @@ public class Main {
         Image imgA = new Image(Main.Image_A);
         Image imgB = new Image(Main.Image_B);
         Image imgC = Processador.sum(imgA, imgB);
-        imgA.titleImage("Image A");
-        imgB.titleImage("Image B");
-        imgC.titleImage("soma de A e B");
+        imgA.viewImage("Image A");
+        imgB.viewImage("Image B");
+        imgC.viewImage("soma de A e B");
     }
 
     private static void imgSubtraction() {
         Image imgA = new Image("imagens/cinza1.png");
         Image imgB = new Image("imagens/cinza2.png");
         Image imgC = Processador.subtraction(imgA, imgB);
-        imgA.titleImage("Image A");
-        imgB.titleImage("Image B");
-        imgC.titleImage("Subtração de A e B");
+        imgA.viewImage("Image A");
+        imgB.viewImage("Image B");
+        imgC.viewImage("Subtração de A e B");
     }
 
     private static void imgMedia() {
         Image imgA = new Image(Main.Image_A);
         Image imgB = new Image(Main.Image_B);
         Image imgC = Processador.media(imgA, imgB);
-        imgA.titleImage("Image A");
-        imgB.titleImage("Image B");
-        imgC.titleImage("media entre A e B");
+        imgA.viewImage("Image A");
+        imgB.viewImage("Image B");
+        imgC.viewImage("media entre A e B");
     }
 
     private static void imgNot() {
         Image imgA = new Image(Main.Image_B);
         Image imgC = Processador.not(imgA);
-        imgA.titleImage("Image A");
-        imgC.titleImage("Não A");
+        imgA.viewImage("Image A");
+        imgC.viewImage("Não A");
     }
 
     private static void imgEqualization() {
@@ -144,22 +148,51 @@ public class Main {
         Image imgA = new Image("imagens/lenna.jpg");
         Histogram hist = new Histogram(imgA);
         Image imgB = hist.getImage();
-        imgA.titleImage("Image A");
-        imgB.titleImage("Image B - Equalized");
+        imgA.viewImage("Image A");
+        imgB.viewImage("Image B - Equalized");
         imgB.save("Image B Quantize", "imagens_out/");
     }
     //26.m'
     private static void imgStretchin(){
         Image imgE = new Image(Main.Image_MASSA);
-        imgE.titleImage("Imagem MASSA");
+        imgE.viewImage("Imagem MASSA");
         //Stretchin img1 = new Stretchin();
         
-        Stretchin.linear(imgE, 1.4f, 10f).titleImage("Imagem MASSA 1.4");
-        Stretchin.linear(imgE, 1.6f, 0f).titleImage("Imagem MASSA 1.2");
-        Stretchin.linear(imgE, 0.2f, 20f).titleImage("Imagem MASSA 0.2");
+        Stretchin.linear(imgE, 1.4f, 10f).viewImage("Imagem MASSA 1.4");
+        Stretchin.linear(imgE, 1.6f, 0f).viewImage("Imagem MASSA 1.2");
+        Stretchin.linear(imgE, 0.2f, 20f).viewImage("Imagem MASSA 0.2");
 
-        Stretchin.minMax(Stretchin.linear(imgE, 1.4f, 10f)).titleImage("Imagem MASSA 1.4");
-        Stretchin.minMax(Stretchin.linear(imgE, 1.6f, 0f)).titleImage("Imagem MASSA 1.2");
-        Stretchin.minMax(Stretchin.linear(imgE, 0.2f, 20f)).titleImage("Imagem MASSA 0.2");
+        Stretchin.minMax(Stretchin.linear(imgE, 1.4f, 10f)).viewImage("Imagem MASSA 1.4");
+        Stretchin.minMax(Stretchin.linear(imgE, 1.6f, 0f)).viewImage("Imagem MASSA 1.2");
+        Stretchin.minMax(Stretchin.linear(imgE, 0.2f, 20f)).viewImage("Imagem MASSA 0.2");
+    }
+
+    private static void imgDithering(){
+        int limiar[] = {16, 64, 128};
+        Image imgE = new Image(Main.Image_MASSA);
+        imgE.viewImage("Imagem MASSA");
+
+        // limiar simles
+        // Dithering.limiarSimples(imgE, limiar[2]).viewImage("Limiar 128");
+        // Dithering.limiarSimples(imgE, limiar[1]).viewImage("Limiar 64");
+        // Dithering.limiarSimples(imgE, limiar[0]).viewImage("Limiar 16");
+
+        // limiar periodico disperso
+        // pata ficar com valores entre 0-3, na linha 17 do metodo quantize e 
+        // altere para mat[c][y][x] = (int) (cor), isso porque classe trabalhar 
+        // com apenas 256  niveis de cinza 
+        int N[][] = {{0,2},{3,1}};
+        Dithering.limiarPeriodicoDisperso(imgE, N).viewImage("Periodico Disperso 2x2");
+
+
+
+    }
+    private static void imgMorfologiaBin(){
+
+        Image imgE = new Image(Main.Image_B);
+        //Image imgE = new Image(Main.Image_MASSA);
+        imgE.viewImage("Imagem B");
+        int EE[][] = {{255,255,255}, {255,255,255}, {255,255,255}};
+        MorfologiaBin.erosao(imgE, EE).viewImage("Image Erosão");
     }
 }

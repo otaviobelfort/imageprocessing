@@ -14,7 +14,8 @@ public class Processador {
             for (int y = 0; y < alt; y++) {
                 for (int x = 0; x < larg; x++) {
                     cor = (mat[c][y][x])/faixa;
-                    mat[c][y][x] = (int) (cor * faixa);
+                    mat[c][y][x] = (int) (cor);
+                    //mat[c][y][x] = (int) (cor * faixa);
                 }
             }
         }
