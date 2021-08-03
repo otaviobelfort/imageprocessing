@@ -1,5 +1,30 @@
 # Image Processing Design
 
+## Implementação
+
+### Dithering:
+ - Limiar simples;
+ - Limiar com modulação aleatória;
+ - Limiar com modulação ordenada periódico aglomerado;
+ - Limiar com modulação ordenada periódico disperso;
+ - Limiar com modulação ordenada aperiódico;
+
+### Morfologia matemática binária:
+ - Erosão
+ - Dilatação
+ - Abertura
+ - Fechamento
+ - Borda interna
+ - Borda externa
+
+### Morfologia matemática monocromática:
+ - Erosão
+ - Dilatação
+ - Abertura
+ - Fechamento
+ - Smoothing
+ - Gradiente
+
 ## Class Image
 ### Metodos
 * ``` Construtor ``` 

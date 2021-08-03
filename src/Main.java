@@ -1,4 +1,6 @@
 
+import java.util.Random;
+
 import util.Dithering;
 import util.Histogram;
 import util.Image;
@@ -20,6 +22,7 @@ public class Main {
     
 
     public static void main(String args[]) {
+
         //viewImg();
         //rgbToGray();
         //grayToRgb();
@@ -30,8 +33,38 @@ public class Main {
         //imgNot();
         //imgEqualization();
         //imgStretchin();
-        imgDithering();
-        imgMorfologiaBin();
+        // imgDithering();
+        // imgMorfologiaBin();
+        mat();
+    }
+    private static void mat(){
+        int x, y;
+        int [][]matOut = {{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1}};
+        int [][]matIn = {{1,2,4,5,6},{1,2,4,5,6},{1,2,4,5,6},{1,2,4,5,6},{1,2,4,5,6}};
+        int [][]N = {{0, 2},{3,1}};
+        int color;
+        int larg = 5;
+        int alt = 5;
+        //N = [[1,2],[2,2]];
+        int [][][]matriz = new int[4][5][5]; 
+         Random num = new Random();
+        for(var i=0; i<matIn.length; i++){
+            for(int j=0; j<matIn[i].length; j++){
+                for(int k=0; k<matIn[i].length; k++){
+                    color = matIn[j][k];
+                    
+                    for (x = 0; x < larg; x++){
+                        for (y = 0; y < larg; y++){
+                            matOut[j+(x)][k+(j)] = color < N[y][x] ? 0 : 255;
+                        }
+                    }
+                   // matOut[j][k]= num.nextInt(4);
+                    System.out.print(matOut[0][k]);
+                }
+                System.out.println(matOut[j][0]);
+            }
+            //System.out.println(matOut[i][0][0]);
+        }
     }
 
     //View images
