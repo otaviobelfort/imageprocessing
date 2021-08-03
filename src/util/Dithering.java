@@ -146,4 +146,46 @@ public class Dithering {
         }
         return new Image(matOut); 
     }
+
+
+    public static Image limiarAperiodicoDisperso(Image imgIn, int N[][]){
+        // dimensão
+        int tam = N.length;
+        int black = 0;
+        int white = 255;
+        int i, j;
+      
+        Image imgQuantize = Processador.quantize(imgIn, 256,tam*tam+1);
+        imgQuantize.viewImage("Image Quantize");
+        int nChannel = imgQuantize.getChannel(); 
+        int alt = imgQuantize.getHeight();
+        int larg = imgQuantize.getWidth();
+        int [][][]matIn = imgQuantize.getMatriz();
+        int [][][]matOut = new int[nChannel][alt][larg];
+        int color, error;
+        for (int c = 0; c < nChannel; c++) {
+            for (int y = 0; y < alt-1; y++) {
+               j = y;
+                for (int x = 0; x < larg-1; x++){
+                    i =  x;
+                    color = matIn[c][y][x];
+                    
+                    matOut[c][y][x] = color < N[i][j] ? black : white;
+                    if(color < N[i][j]){
+                        error = matOut[c][y][x] - black;
+                        matOut[c][y][x] = black;
+                    }else{
+                        error = matOut[c][y][x] - white;
+                        matOut[c][y][x] = white;
+                    }
+                    matOut[c][y+1][x] += (3/8)*error;
+                    matOut[c][y][x+1] += (3/8)*error;
+                    matOut[c][y+1][x+1] += (2/8)*error;
+                }
+
+            }
+
+        }
+        return new Image(matOut); 
+    }
 }
