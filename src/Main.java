@@ -1,6 +1,17 @@
 
+import java.util.EventListener;
 import java.util.Random;
 
+import javax.swing.Action;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import java.awt.event.KeyEvent;
 import util.Dithering;
 import util.Histogram;
 import util.Image;
@@ -8,7 +19,7 @@ import util.MorfologiaBin;
 import util.Processador;
 import util.Stretchin;
 
-public class Main {
+public class Main extends JFrame {
 
     // file path
     static String Image_A = "imagens/a.png";
@@ -22,7 +33,7 @@ public class Main {
     
 
     public static void main(String args[]) {
-
+        
         //viewImg();
         //rgbToGray();
         //grayToRgb();
@@ -35,8 +46,13 @@ public class Main {
         //imgStretchin();
         // imgDithering();
         // imgMorfologiaBin();
-        mat();
+        //mat();
+        Menu();
     }
+
+   
+
+
     private static void mat(){
         int x, y;
         int [][]matOut = {{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1}};
@@ -216,10 +232,22 @@ public class Main {
         // com apenas 256  niveis de cinza 
         int N[][] = {{0,2},{3,1}};
         Dithering.limiarPeriodicoDisperso(imgE, N).viewImage("Periodico Disperso 2x2");
-
-
-
     }
+
+ 
+
+    
+    private static void imgDitheringSimples(){
+        int limiar[] = {16, 64, 128};
+        Image imgE = new Image(Main.Image_MASSA);
+        imgE.viewImage("Imagem MASSA");
+
+        // limiar simles
+        Dithering.limiarSimples(imgE, limiar[2]).viewImage("Limiar 128");
+        Dithering.limiarSimples(imgE, limiar[1]).viewImage("Limiar 64");
+        Dithering.limiarSimples(imgE, limiar[0]).viewImage("Limiar 16");
+
+         }
     private static void imgMorfologiaBin(){
 
         Image imgE = new Image(Main.Image_B);
@@ -228,4 +256,91 @@ public class Main {
         int EE[][] = {{255,255,255}, {255,255,255}, {255,255,255}};
         MorfologiaBin.erosao(imgE, EE).viewImage("Image Erosão");
     }
+
+
+
+
+
+    private class MyMenuItem extends JMenuItem 
+      implements ActionListener {
+      public MyMenuItem(String text) {
+         super(text);
+         addActionListener(this);
+      }
+      public void actionPerformed(ActionEvent e) {
+         //System.out.println("Item clicked: "+e.getActionCommand());
+      }
+    
+        
+    }
+
+    private static void Menu(){
+        JFrame frame = new JFrame();
+        frame.setTitle("Menu Example");
+        frame.setSize(500, 500);
+
+        // Cria uma barra de menu para o JFrame
+        JMenuBar menuBar = new JMenuBar();
+
+        // Adiciona a barra de menu ao  frame
+        frame.setJMenuBar(menuBar);
+
+        // Define e adiciona dois menus drop down na barra de menus
+        JMenu ditheMenu = new JMenu("Dithering");
+        JMenu morfoBinMenu = new JMenu("Morfologia Bin");
+        //ditheMenu.add()
+        menuBar.add(ditheMenu);
+        menuBar.add(morfoBinMenu);
+
+        JMenuItem limiarSimple = new JMenuItem("Limiar simples");
+        JMenuItem limiarAlea = new JMenuItem("modulação aleatória");
+        JMenuItem modulaOrdePerio = new JMenuItem("modulação ordenada periódico aglomerado");
+        JMenuItem modulPerioDisper = new JMenuItem("Modulação Periodica Disperso");
+        JMenuItem modulOrdenaAperi = new JMenuItem("modulação ordenada aperiódico");
+
+        JMenuItem eros = new JMenuItem("Erosão");
+        JMenuItem dilata = new JMenuItem("Dilatação");
+        JMenuItem abert = new JMenuItem("Abertura");
+        JMenuItem fechament = new JMenuItem("Fechamento");
+        JMenuItem bord_int = new JMenuItem("Borda interna");
+        JMenuItem board_ext = new JMenuItem("Borda externa");
+
+
+        ditheMenu.add(limiarSimple);
+        ditheMenu.add(limiarAlea);
+        ditheMenu.add(modulaOrdePerio);
+        ditheMenu.add(modulPerioDisper);
+        ditheMenu.add(modulOrdenaAperi);
+        ditheMenu.addSeparator();
+        morfoBinMenu.add(eros);
+        morfoBinMenu.add(dilata);
+        morfoBinMenu.add(abert);
+        morfoBinMenu.add(fechament);
+        morfoBinMenu.add(bord_int);
+        morfoBinMenu.add(board_ext);
+        //ditheMenu.addSeparator();
+
+        limiarSimple.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {    
+                imgDitheringSimples();
+                System.out.println("Clicou.....");
+            }
+        });
+
+        modulPerioDisper.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {    
+                imgDithering();
+                System.out.println("Clicou.....");
+            }
+        });
+
+
+
+        frame.setVisible(true);
+    }
+   
+
+
+
 }
+
