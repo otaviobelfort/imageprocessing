@@ -16,6 +16,7 @@ import util.Dithering;
 import util.Histogram;
 import util.Image;
 import util.MorfologiaBin;
+import util.MorfologiaBinaria;
 import util.Processador;
 import util.Stretchin;
 
@@ -45,7 +46,7 @@ public class Main extends JFrame {
         //imgEqualization();
         //imgStretchin();
         // imgDithering();
-        // imgMorfologiaBin();
+        //imgMorfologiaBin();
         //mat();
         Menu();
     }
@@ -248,15 +249,65 @@ public class Main extends JFrame {
         Dithering.limiarSimples(imgE, limiar[0]).viewImage("Limiar 16");
 
          }
-    private static void imgMorfologiaBin(){
+    private static void imgMorfologiaBinariaErosao(){
 
-        Image imgE = new Image(Main.Image_B);
+        Image imgB = new Image("imagens/b.png");
         //Image imgE = new Image(Main.Image_MASSA);
-        imgE.viewImage("Imagem B");
+        imgB.viewImage("Imagem B");
+        int EE1[][] = {{255,255,255}, {255,255,255}, {255,255,255}};
+        int EE[][] = {{0, 0, 255, 0, 0}, {0, 255, 255, 255, 0}, {
+            255, 255, 255, 255, 255}, {0, 255, 255, 255, 0}, {0, 0, 255, 0, 0}};
+
+        MorfologiaBin.erosao(imgB, EE1).viewImage("Image Erosão");
+    }
+    private static void imgMorfologiaBinariaDilatacao(){
+
+        Image imgB = new Image("imagens/b.png");
+        //Image imgE = new Image(Main.Image_MASSA);
+        imgB.viewImage("Imagem B");
         int EE[][] = {{255,255,255}, {255,255,255}, {255,255,255}};
-        MorfologiaBin.erosao(imgE, EE).viewImage("Image Erosão");
+        
+        MorfologiaBinaria.erosao2(imgB, EE).viewImage("Image B - Erosão");
     }
 
+    
+    private static void imgMorfologiaBinariaAbertura(){
+
+        Image imgB = new Image("imagens/b.png");
+        //Image imgE = new Image(Main.Image_MASSA);
+        imgB.viewImage("Imagem B");
+        int EE[][] = {{255,255,255}, {255,255,255}, {255,255,255}};
+        
+        MorfologiaBinaria.abertura(imgB, EE).viewImage("Image B - Abertura");
+    }
+    private static void imgMorfologiaBinariaFechamento(){
+
+        Image imgB = new Image("imagens/b.png");
+        //Image imgE = new Image(Main.Image_MASSA);
+        imgB.viewImage("Imagem B");
+        int EE[][] = {{255,255,255}, {255,255,255}, {255,255,255}};
+        
+        MorfologiaBinaria.fechamento(imgB, EE).viewImage("Image B - Fechamento");
+    }
+    private static void imgMorfologiaBinariaBordaInterna(){
+
+        Image imgB = new Image("imagens/b.png");
+        //Image imgE = new Image(Main.Image_MASSA);
+        imgB.viewImage("Imagem B");
+        int EE[][] = {{255,255,255}, {255,255,255}, {255,255,255}};
+        
+        MorfologiaBinaria.bordaInterna(imgB, EE).viewImage("Image B - Borda Interna");
+    }
+
+    private static void imgMorfologiaBinariaBordaExterna(){
+
+        Image imgB = new Image("imagens/b.png");
+        //Image imgE = new Image(Main.Image_MASSA);
+        imgB.viewImage("Imagem B");
+        int EE[][] = {{255,255,255}, {255,255,255}, {255,255,255}};
+        
+        MorfologiaBinaria.abertura(imgB, EE).viewImage("Image B - Borda Externa");
+    }
 
 
 
@@ -298,12 +349,12 @@ public class Main extends JFrame {
         JMenuItem modulPerioDisper = new JMenuItem("Modulação Periodica Disperso");
         JMenuItem modulOrdenaAperi = new JMenuItem("modulação ordenada aperiódico");
 
-        JMenuItem eros = new JMenuItem("Erosão");
-        JMenuItem dilata = new JMenuItem("Dilatação");
-        JMenuItem abert = new JMenuItem("Abertura");
-        JMenuItem fechament = new JMenuItem("Fechamento");
-        JMenuItem bord_int = new JMenuItem("Borda interna");
-        JMenuItem board_ext = new JMenuItem("Borda externa");
+        JMenuItem erosao = new JMenuItem("Erosão");
+        JMenuItem dilatacao = new JMenuItem("Dilatação");
+        JMenuItem abertura = new JMenuItem("Abertura");
+        JMenuItem fechamento = new JMenuItem("Fechamento");
+        JMenuItem borda_interna = new JMenuItem("Borda interna");
+        JMenuItem borda_externa = new JMenuItem("Borda externa");
 
 
         ditheMenu.add(limiarSimple);
@@ -312,12 +363,12 @@ public class Main extends JFrame {
         ditheMenu.add(modulPerioDisper);
         ditheMenu.add(modulOrdenaAperi);
         ditheMenu.addSeparator();
-        morfoBinMenu.add(eros);
-        morfoBinMenu.add(dilata);
-        morfoBinMenu.add(abert);
-        morfoBinMenu.add(fechament);
-        morfoBinMenu.add(bord_int);
-        morfoBinMenu.add(board_ext);
+        morfoBinMenu.add(erosao);
+        morfoBinMenu.add(dilatacao);
+        morfoBinMenu.add(abertura);
+        morfoBinMenu.add(fechamento);
+        morfoBinMenu.add(borda_interna);
+        morfoBinMenu.add(borda_externa);
         //ditheMenu.addSeparator();
 
         limiarSimple.addActionListener(new ActionListener() {
@@ -327,13 +378,45 @@ public class Main extends JFrame {
             }
         });
 
-        modulPerioDisper.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {    
-                imgDithering();
-                System.out.println("Clicou.....");
+        erosao.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) { 
+                imgMorfologiaBinariaErosao();
+                //System.out.println("Clicou.....em Morfologia Binaria -> Erosão");
             }
         });
 
+        dilatacao.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) { 
+                imgMorfologiaBinariaDilatacao();
+                
+            }
+        });
+        abertura.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) { 
+                imgMorfologiaBinariaAbertura();
+                
+            }
+        });
+        fechamento.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {    
+                imgMorfologiaBinariaFechamento();
+                
+            }
+        });
+
+        borda_externa.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {   
+                imgMorfologiaBinariaBordaExterna();
+                
+            }
+        });
+
+        borda_interna.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) { 
+                imgMorfologiaBinariaBordaInterna();
+                
+            }
+        });
 
 
         frame.setVisible(true);

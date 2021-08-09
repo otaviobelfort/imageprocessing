@@ -10,13 +10,13 @@ public class Dithering {
         int [][][]matIn = img.getMatriz();
         int [][][]matOut = new int[nChannel][alt][larg];
         int color;
-        int black = 0;
-        int white = 255;
+        int BLACK = 0;
+        int WHITE = 255;
         for (int c = 0; c < nChannel; c++) {
             for (int y = 0; y < alt; y++) {
                 for (int x = 0; x < larg; x++) {
                     color = matIn[c][y][x] ;
-                    matOut[c][y][x] = color < limiar ? black : white;  
+                    matOut[c][y][x] = color < limiar ? BLACK : WHITE;  
 
                 }
             }
@@ -33,8 +33,8 @@ public class Dithering {
         int [][][]matIn = img.getMatriz();
         int [][][]matOut = new int[nChannel][alt][larg];
         int color;
-        int black = 0;
-        int white = 255;
+        int BLACK = 0;
+        int WHITE = 255;
         Random random = new Random();
 
         for (int c = 0; c < nChannel; c++) {
@@ -43,7 +43,7 @@ public class Dithering {
                     // temp -> pixel[x][y] + random() 
                     // pertubação aleatória
                     color = matIn[c][y][x] + (random.nextInt(15) + random.nextInt(-10));
-                    matOut[c][y][x] = color < limiar ? black : white;  
+                    matOut[c][y][x] = color < limiar ? BLACK : WHITE;  
 
                 }
             }
@@ -60,13 +60,13 @@ public class Dithering {
         int [][][]matIn = img.getMatriz();
         int [][][]matOut = new int[nChannel][alt][larg];
         int color;
-        int black = 0;
-        int white = 255;
+        int BLACK = 0;
+        int WHITE = 255;
         for (int c = 0; c < nChannel; c++) {
             for (int y = 0; y < alt; y++) {
                 for (int x = 0; x < larg; x++) {
                     color = matIn[c][y][x] ;
-                    matOut[c][y][x] = color < limiar ? black : white;  
+                    matOut[c][y][x] = color < limiar ? BLACK : WHITE;  
 
                 }
             }
@@ -80,8 +80,8 @@ public class Dithering {
     public static Image limiarPeriodicoDisperso(Image imgIn, int N[][]){
         // dimensão
         int tam = N.length;
-        int black = 0;
-        int white = 255;
+        int BLACK = 0;
+        int WHITE = 255;
         int i, j;
         // trabalha com 256 niveis de cinza
         Image imgQuantize = Processador.quantize(imgIn, 256,tam*tam);
@@ -98,7 +98,7 @@ public class Dithering {
                 for (int x = 0; x < larg; x++){
                     i =  x % tam;
                     color = matIn[c][y][x];
-                    matOut[c][y][x] = color < N[j][i] ? black : white;
+                    matOut[c][y][x] = color < N[j][i] ? BLACK : WHITE;
                 }
 
             }
@@ -113,8 +113,8 @@ public class Dithering {
     public static Image limiarPeriodicoAglomerado(Image imgIn, int N[][]){
         // dimensão
         int tam = N.length;
-        int black = 0;
-        int white = 255;
+        int BLACK = 0;
+        int WHITE = 255;
         int i, j;
         // trabalha com 256 niveis de cinza
         // NxN+1
@@ -136,7 +136,7 @@ public class Dithering {
 
                     for (i = 0; i < larg; i++){
                         for (j = 0; j < larg; j++){
-                            matOut[c][y+(-1+i)][x+(-1+j)] = color < N[i][j] ? black : white;
+                            matOut[c][y+(-1+i)][x+(-1+j)] = color < N[i][j] ? BLACK : WHITE;
                         }
                     }
                 }
@@ -151,8 +151,8 @@ public class Dithering {
     public static Image limiarAperiodicoDisperso(Image imgIn, int N[][]){
         // dimensão
         int tam = N.length;
-        int black = 0;
-        int white = 255;
+        int BLACK = 0;
+        int WHITE = 255;
         int i, j;
       
         Image imgQuantize = Processador.quantize(imgIn, 256,tam*tam+1);
@@ -170,13 +170,13 @@ public class Dithering {
                     i =  x;
                     color = matIn[c][y][x];
                     
-                    matOut[c][y][x] = color < N[i][j] ? black : white;
+                    matOut[c][y][x] = color < N[i][j] ? BLACK : WHITE;
                     if(color < N[i][j]){
-                        error = matOut[c][y][x] - black;
-                        matOut[c][y][x] = black;
+                        error = matOut[c][y][x] - BLACK;
+                        matOut[c][y][x] = BLACK;
                     }else{
-                        error = matOut[c][y][x] - white;
-                        matOut[c][y][x] = white;
+                        error = matOut[c][y][x] - WHITE;
+                        matOut[c][y][x] = WHITE;
                     }
                     matOut[c][y+1][x] += (3/8)*error;
                     matOut[c][y][x+1] += (3/8)*error;
