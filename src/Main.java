@@ -17,6 +17,7 @@ import util.Histogram;
 import util.Image;
 import util.MorfologiaBin;
 import util.MorfologiaBinaria;
+import util.MorfologiaMonocromatica;
 import util.Processador;
 import util.Stretchin;
 
@@ -217,7 +218,41 @@ public class Main extends JFrame {
         Stretchin.minMax(Stretchin.linear(imgE, 0.2f, 20f)).viewImage("Imagem MASSA 0.2");
     }
 
-    private static void imgDithering(){
+    // ------  Limiar simples;
+    private static void imgDitheringSimples(){
+        int limiar[] = {16, 64, 128};
+        Image imgE = new Image(Main.Image_MASSA);
+        imgE.viewImage("Imagem MASSA");
+        // limiar simles
+        Dithering.limiarSimples(imgE, limiar[2]).viewImage("Limiar 128");
+        Dithering.limiarSimples(imgE, limiar[1]).viewImage("Limiar 64");
+        Dithering.limiarSimples(imgE, limiar[0]).viewImage("Limiar 16");
+
+    }
+
+    // ------  Limiar com modulação aleatória
+    private static void imgDitheringAleatorio(){
+        int limiar[] = {16, 64, 128};
+        Image imgE = new Image(Main.Image_MASSA);
+        imgE.viewImage("Imagem MASSA");
+        // limiar simles
+       // Dithering.limiarSimples(imgE, limiar[2]).viewImage("Limiar 128");
+        //Dithering.limiarSimples(imgE, limiar[1]).viewImage("Limiar 64");
+        Dithering.limiarSimples(imgE, limiar[0]).viewImage("Limiar 16");
+
+    }
+
+    // ------  Limiar com modulação ordenada periódico aglomerado
+    private static void imgDitheringAglomerado(){
+        int N[][] = {{0,1},{3,1}};
+        int N2[][] = {{6, 8, 4}, {1, 0, 3}, {5, 2, 7}};
+        Image imgA = new Image("imagens/ariele.png");
+        imgA.viewImage("Imagem ariele");
+        Dithering.limiarPeriodicoAglomerado(imgA, N2).viewImage("Periodico Aglomerado");
+    }
+
+    // ------ Limiar com modulação ordenada periódico disperso;
+    private static void imgDitheringDisperso(){
         int limiar[] = {16, 64, 128};
         Image imgE = new Image(Main.Image_MASSA);
         imgE.viewImage("Imagem MASSA");
@@ -233,22 +268,17 @@ public class Main extends JFrame {
         // com apenas 256  niveis de cinza 
         int N[][] = {{0,2},{3,1}};
         Dithering.limiarPeriodicoDisperso(imgE, N).viewImage("Periodico Disperso 2x2");
-    }
-
- 
-
+    }                                                                                                                                                                                                                                                                                                                                                                                                                   
     
-    private static void imgDitheringSimples(){
+    // ------ Limiar com modulação ordenada aperiódico 
+    private static void imgDitheringAperiodico(){
         int limiar[] = {16, 64, 128};
         Image imgE = new Image(Main.Image_MASSA);
         imgE.viewImage("Imagem MASSA");
-
-        // limiar simles
-        Dithering.limiarSimples(imgE, limiar[2]).viewImage("Limiar 128");
-        Dithering.limiarSimples(imgE, limiar[1]).viewImage("Limiar 64");
         Dithering.limiarSimples(imgE, limiar[0]).viewImage("Limiar 16");
 
-         }
+    }
+    
     private static void imgMorfologiaBinariaErosao(){
 
         Image imgB = new Image("imagens/b.png");
@@ -308,8 +338,94 @@ public class Main extends JFrame {
         
         MorfologiaBinaria.abertura(imgB, EE).viewImage("Image B - Borda Externa");
     }
+// -------------------------------------------------------
+// Morfologia monocromatica
+//--------------------------------------------------------
 
+private static void imgMorfologiaMonocromaticaDilatacao(){
 
+    //Image imgB = new Image("imagens/julia.png");
+    Image imgB = new Image("imagens/lenna.jpg");
+    //Image imgE = new Image(Main.Image_MASSA);
+    imgB.viewImage("Imagem lenna");
+    int EE1[][] = {{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {
+        1, 1, 2, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}};
+    int EE3[][] = {{1, 1, 1}, {1, 2, 1}, {1, 1, 1}};
+    int EE2[][] = {{255, 255, 255, 255, 255}, {255, 255, 255, 255, 255}, {
+            255, 255, 255, 255, 255}, {255, 255, 255, 255, 255}, {255, 255, 255, 255, 255}};
+
+    int EE[][] = {{255,255,255}, {255,255,255}, {255,255,255}};
+    
+    MorfologiaMonocromatica.dilatacao(imgB, EE2).viewImage("Morfo...Mono - Dilatação");
+}
+
+private static void imgMorfologiaMonocromaticaErosao(){
+
+    Image imgB = new Image("imagens/cinza1.png");
+    //Image imgB = new Image("imagens/lenna.jpg");
+    //Image imgE = new Image(Main.Image_MASSA);
+    imgB.viewImage("Imagem B");
+    int EE1[][] = {{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {
+        1, 1, 2, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}};
+    int EE3[][] = {{1, 1, 1}, {1, 2, 1}, {1, 1, 1}};
+    int EE2[][] = {{255, 255, 255, 255, 255}, {255, 255, 255, 255, 255}, {
+            255, 255, 255, 255, 255}, {255, 255, 255, 255, 255}, {255, 255, 255, 255, 255}};
+
+    int EE[][] = {{255,255,255}, {255,255,255}, {255,255,255}};
+    
+    MorfologiaMonocromatica.erosao(imgB, EE1).viewImage("Morfo...Mono - Erosao");
+}
+
+private static void imgMorfologiaMonocromaticaAbertura(){
+
+    Image imgB = new Image("imagens/julia.png");
+    //Image imgB = new Image("imagens/lenna.jpg");
+    //Image imgE = new Image(Main.Image_MASSA);
+    imgB.viewImage("Imagem B");
+    int EE1[][] = {{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {
+        1, 1, 2, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}};
+    int EE3[][] = {{1, 1, 1}, {1, 2, 1}, {1, 1, 1}};
+    int EE2[][] = {{255, 255, 255, 255, 255}, {255, 255, 255, 255, 255}, {
+            255, 255, 255, 255, 255}, {255, 255, 255, 255, 255}, {255, 255, 255, 255, 255}};
+
+    int EE[][] = {{255,255,255}, {255,255,255}, {255,255,255}};
+    
+    MorfologiaMonocromatica.erosao(imgB, EE1).viewImage("Morfo...Mono - Abertura");
+}
+
+private static void imgMorfologiaMonocromaticaFechamento(){
+
+    //Image imgB = new Image("imagens/cinza1.png");
+    Image imgB = new Image("imagens/lenna.jpg");
+    //Image imgE = new Image(Main.Image_MASSA);
+    imgB.viewImage("Imagem B");
+    int EE1[][] = {{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {
+        1, 1, 2, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}};
+    int EE3[][] = {{1, 1, 1}, {1, 2, 1}, {1, 1, 1}};
+    int EE2[][] = {{255, 255, 255, 255, 255}, {255, 255, 255, 255, 255}, {
+            255, 255, 255, 255, 255}, {255, 255, 255, 255, 255}, {255, 255, 255, 255, 255}};
+
+    int EE[][] = {{255,255,255}, {255,255,255}, {255,255,255}};
+    
+    MorfologiaMonocromatica.erosao(imgB, EE1).viewImage("Morfo...Mono - Fechamento");
+}
+
+private static void imgMorfologiaMonocromaticaGradiente(){
+
+    //Image imgB = new Image("imagens/julia.png");
+    Image imgB = new Image("imagens/lenna.jpg");
+    //Image imgE = new Image(Main.Image_MASSA);
+    imgB.viewImage("Imagem B");
+    int EE1[][] = {{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {
+        1, 1, 2, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}};
+    int EE3[][] = {{1, 1, 1}, {1, 2, 1}, {1, 1, 1}};
+    int EE2[][] = {{255, 255, 255, 255, 255}, {255, 255, 255, 255, 255}, {
+            255, 255, 255, 255, 255}, {255, 255, 255, 255, 255}, {255, 255, 255, 255, 255}};
+
+    int EE[][] = {{255,255,255}, {255,255,255}, {255,255,255}};
+    
+    MorfologiaMonocromatica.erosao(imgB, EE3).viewImage("Morfo...Mono - Gradiente");
+}
 
 
     private class MyMenuItem extends JMenuItem 
@@ -338,14 +454,16 @@ public class Main extends JFrame {
 
         // Define e adiciona dois menus drop down na barra de menus
         JMenu ditheMenu = new JMenu("Dithering");
-        JMenu morfoBinMenu = new JMenu("Morfologia Bin");
+        JMenu morfoBinMenu = new JMenu("Morfologia Binaria");
+        JMenu morfoMonoMenu = new JMenu("Morfologia Mono");
         //ditheMenu.add()
         menuBar.add(ditheMenu);
         menuBar.add(morfoBinMenu);
+        menuBar.add(morfoMonoMenu);
 
         JMenuItem limiarSimple = new JMenuItem("Limiar simples");
         JMenuItem limiarAlea = new JMenuItem("modulação aleatória");
-        JMenuItem modulaOrdePerio = new JMenuItem("modulação ordenada periódico aglomerado");
+        JMenuItem modulaOrdePerioAglomerado = new JMenuItem("modulação ordenada periódico aglomerado");
         JMenuItem modulPerioDisper = new JMenuItem("Modulação Periodica Disperso");
         JMenuItem modulOrdenaAperi = new JMenuItem("modulação ordenada aperiódico");
 
@@ -356,10 +474,17 @@ public class Main extends JFrame {
         JMenuItem borda_interna = new JMenuItem("Borda interna");
         JMenuItem borda_externa = new JMenuItem("Borda externa");
 
+        JMenuItem erosao_mo = new JMenuItem("Erosão");
+        JMenuItem dilatacao_mo = new JMenuItem("Dilatação");
+        JMenuItem abertura_mo = new JMenuItem("Abertura");
+        JMenuItem fechamento_mo = new JMenuItem("Fechamento");
+        JMenuItem gradiente = new JMenuItem("Gradiente");
+        //JMenuItem borda_externa_mo = new JMenuItem("Borda externa");
+
 
         ditheMenu.add(limiarSimple);
         ditheMenu.add(limiarAlea);
-        ditheMenu.add(modulaOrdePerio);
+        ditheMenu.add(modulaOrdePerioAglomerado);
         ditheMenu.add(modulPerioDisper);
         ditheMenu.add(modulOrdenaAperi);
         ditheMenu.addSeparator();
@@ -369,15 +494,56 @@ public class Main extends JFrame {
         morfoBinMenu.add(fechamento);
         morfoBinMenu.add(borda_interna);
         morfoBinMenu.add(borda_externa);
-        //ditheMenu.addSeparator();
+        ditheMenu.addSeparator();
+        morfoMonoMenu.add(erosao_mo);
+        morfoMonoMenu.add(dilatacao_mo);
+        morfoMonoMenu.add(abertura_mo);
+        morfoMonoMenu.add(fechamento_mo);
+        morfoMonoMenu.add(gradiente);
+        //morfoMonoMenu.add(borda_externa);
+        //morfoMonoMenu.addSeparator();
 
+        // ----------------------------------------------
+        // ---- ### Dithering
+        // ----------------------------------------------
         limiarSimple.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {    
                 imgDitheringSimples();
-                System.out.println("Clicou.....");
+                
             }
         });
 
+        limiarAlea.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {    
+                imgDitheringAleatorio();
+                
+            }
+        });
+
+        modulaOrdePerioAglomerado.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {    
+                imgDitheringAglomerado();
+                
+            }
+        });
+
+        modulPerioDisper.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {    
+                imgDitheringDisperso();
+                
+            }
+        });
+
+        modulOrdenaAperi.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {    
+                imgDitheringAperiodico();
+                
+            }
+        });
+
+        // ----------------------------------------------
+        // ---- ### Morfologia matemática binária
+        // ----------------------------------------------
         erosao.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) { 
                 imgMorfologiaBinariaErosao();
@@ -418,6 +584,43 @@ public class Main extends JFrame {
             }
         });
 
+        // ----------------------------------------------
+        // ---- ### Morfologia matemática monocromática
+        // ----------------------------------------------
+        dilatacao_mo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) { 
+                imgMorfologiaMonocromaticaDilatacao();
+                
+            }
+        });
+        
+        erosao_mo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) { 
+                imgMorfologiaMonocromaticaErosao();
+                
+            }
+        });
+
+        fechamento_mo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) { 
+                imgMorfologiaMonocromaticaFechamento();
+                
+            }
+        });
+
+        abertura_mo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) { 
+                imgMorfologiaMonocromaticaAbertura();
+                
+            }
+        });
+
+        gradiente.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) { 
+                imgMorfologiaMonocromaticaGradiente();
+                
+            }
+        });
 
         frame.setVisible(true);
     }

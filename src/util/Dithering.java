@@ -118,25 +118,28 @@ public class Dithering {
         int i, j;
         // trabalha com 256 niveis de cinza
         // NxN+1
-        Image imgQuantize = Processador.quantize(imgIn, 256,tam*tam+1);
-        imgQuantize.viewImage("Image Quantize");
+        Image imgQuantize = Processador.quantize(imgIn, 256,tam*(tam+1));
+        //imgQuantize.viewImage("Image Quantize");
         int nChannel = imgQuantize.getChannel(); 
         int alt = imgQuantize.getHeight();
         int larg = imgQuantize.getWidth();
         int [][][]matIn = imgQuantize.getMatriz();
-        int [][][]matOut = new int[nChannel][alt][larg];
-        int color;
+        int cont = N.length;
+        int [][][]matOut = new int[nChannel][alt*cont][larg*cont];
+        
         for (int c = 0; c < nChannel; c++) {
             for (int y = 0; y < alt; y++) {
-               // j = y;
                 for (int x = 0; x < larg; x++){
-                    //i =  x;
-                    color = matIn[c][y][x];
-                    int linha = x;
+                    //color = matIn[c][y][x];
+                    for (i = 0; i < N.length ; i++){
+                        for (j = 0; j < N.length ; j++){
+                           if( matIn[c][y][x] > N[i][j]){
+                               matOut[c][y*cont+i][x*cont+j] = WHITE ;
+                           }else{
+                                matOut[c][y*cont+i][x*cont+j] = BLACK;
+                           }
 
-                    for (i = 0; i < larg; i++){
-                        for (j = 0; j < larg; j++){
-                            matOut[c][y+(-1+i)][x+(-1+j)] = color < N[i][j] ? BLACK : WHITE;
+                            ///matOut[c][y+(-1+i)][x+(-1+j)] = color < N[i][j] ? BLACK : WHITE;
                         }
                     }
                 }
