@@ -11,7 +11,7 @@ public class MorfologiaBin {
         int [][][]matOut = new int[1][alt][larg];
         int color ;
         int c = img.getChannel();
-        System.out.print("\n Erosão: r= " + raio + "\n Alt = " + alt + " \n EE = " + EE.length);
+       // System.out.print("\n Erosão: r= " + raio + "\n Alt = " + alt + " \n EE = " + EE.length);
 
         boolean trueIgual;
         //EE == percorrer o elemento estruturante

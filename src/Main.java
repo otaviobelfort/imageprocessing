@@ -218,12 +218,14 @@ public class Main extends JFrame {
         Stretchin.minMax(Stretchin.linear(imgE, 0.2f, 20f)).viewImage("Imagem MASSA 0.2");
     }
 
+    // ----------------------------------------------
+    // ---- ### Dithering
+    // ----------------------------------------------
     // ------  Limiar simples;
     private static void imgDitheringSimples(){
         int limiar[] = {16, 64, 128};
         Image imgE = new Image(Main.Image_MASSA);
         imgE.viewImage("Imagem MASSA");
-        // limiar simles
         Dithering.limiarSimples(imgE, limiar[2]).viewImage("Simples - Limiar 128");
         Dithering.limiarSimples(imgE, limiar[1]).viewImage("Simples - Limiar 64");
         //Dithering.limiarSimples(imgE, limiar[0]).viewImage("Limiar 16");
@@ -235,7 +237,6 @@ public class Main extends JFrame {
         int limiar[] = {16, 64, 128};
         Image imgE = new Image(Main.Image_MASSA);
         imgE.viewImage("Imagem MASSA");
-        // limiar simles
         Dithering.limiarodulacaoAleatoria(imgE, 128).viewImage("Aleatorio - Limiar 128");
         Dithering.limiarodulacaoAleatoria(imgE, 64).viewImage("Aleatorio - Limiar 64");
         //Dithering.limiarSimples(imgE, limiar[0]).viewImage("Limiar 16");
@@ -256,11 +257,6 @@ public class Main extends JFrame {
         int limiar[] = {16, 64, 128};
         Image imgE = new Image(Main.Image_MASSA);
         imgE.viewImage("Imagem MASSA");
-
-        // limiar simles
-        // Dithering.limiarSimples(imgE, limiar[2]).viewImage("Limiar 128");
-        // Dithering.limiarSimples(imgE, limiar[1]).viewImage("Limiar 64");
-        // Dithering.limiarSimples(imgE, limiar[0]).viewImage("Limiar 16");
 
         // limiar periodico disperso
         // pata ficar com valores entre 0-3, na linha 17 do metodo quantize e 
@@ -283,7 +279,6 @@ public class Main extends JFrame {
     // ---- ### Morfologia matemática binária
     // ---------------------------------------------- 
     private static void imgMorfologiaBinariaErosao(){
-
         Image imgB = new Image("imagens/b.png");
         //Image imgE = new Image(Main.Image_MASSA);
         imgB.viewImage("Imagem B");
@@ -293,8 +288,8 @@ public class Main extends JFrame {
 
         MorfologiaBinaria.erosao2(imgB, EE1).viewImage("Image Erosão");
     }
-    private static void imgMorfologiaBinariaDilatacao(){
 
+    private static void imgMorfologiaBinariaDilatacao(){
         Image imgB = new Image("imagens/b.png");
         //Image imgE = new Image(Main.Image_MASSA);
         imgB.viewImage("Imagem B");
@@ -313,6 +308,7 @@ public class Main extends JFrame {
         
         MorfologiaBinaria.abertura(imgB, EE).viewImage("Image B - Abertura");
     }
+
     private static void imgMorfologiaBinariaFechamento(){
 
         Image imgB = new Image("imagens/b.png");
@@ -322,6 +318,7 @@ public class Main extends JFrame {
         
         MorfologiaBinaria.fechamento(imgB, EE).viewImage("Image B - Fechamento");
     }
+
     private static void imgMorfologiaBinariaBordaInterna(){
 
         Image imgB = new Image("imagens/b.png");
@@ -341,10 +338,11 @@ public class Main extends JFrame {
         
         MorfologiaBinaria.abertura(imgB, EE).viewImage("Image B - Borda Externa");
     }
+
+
 // -------------------------------------------------------
 // Morfologia monocromatica
 //--------------------------------------------------------
-
 private static void imgMorfologiaMonocromaticaDilatacao(){
 
     //Image imgB = new Image("imagens/julia.png");
@@ -444,6 +442,9 @@ private static void imgMorfologiaMonocromaticaGradiente(){
         
     }
 
+    // --------------------------
+    // ########## MENU ##########
+    //---------------------------
     private static void Menu(){
         JFrame frame = new JFrame();
         frame.setTitle("Menu Example");
@@ -458,7 +459,7 @@ private static void imgMorfologiaMonocromaticaGradiente(){
         // Define e adiciona dois menus drop down na barra de menus
         JMenu ditheMenu = new JMenu("Dithering");
         JMenu morfoBinMenu = new JMenu("Morfologia Binaria");
-        JMenu morfoMonoMenu = new JMenu("Morfologia Mono");
+        JMenu morfoMonoMenu = new JMenu("Morfologia Monocromatica");
         //ditheMenu.add()
         menuBar.add(ditheMenu);
         menuBar.add(morfoBinMenu);

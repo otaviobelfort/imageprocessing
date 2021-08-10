@@ -9,7 +9,7 @@ public class MorfologiaMonocromatica {
         int nChannel = img.getChannel();
         int [][][]matOut = new int[nChannel][alt][larg];
         int color ;
-        System.out.print("\n Erosão: c= " + nChannel + "\n Alt = " + alt + " \n EE = " + EE.length);
+        //System.out.print("\n Erosão: c= " + nChannel + "\n Alt = " + alt + " \n EE = " + EE.length);
         int min = 1000000000;
         int cont;
         
@@ -44,7 +44,7 @@ public class MorfologiaMonocromatica {
         int [][][]matOut = new int[nChannel][alt][larg];
         int color ;
         
-        System.out.print("\n Erosão: r= " + raio + "\n Alt = " + alt + " \n EE = " + EE.length);
+        //System.out.print("\n Erosão: r= " + raio + "\n Alt = " + alt + " \n EE = " + EE.length);
         int max = -1000000000;
         int cont;
 

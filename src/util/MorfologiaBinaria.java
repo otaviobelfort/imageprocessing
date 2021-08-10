@@ -8,7 +8,7 @@ public class MorfologiaBinaria {
         int larg = img.getWidth();
         int [][][]matIn = img.getMatriz();
         int [][][]matOut = new int[1][alt][larg];
-        System.out.print("\n Erosão: r= " + raio + "\n Alt = " + alt + " \n EE = " + EE.length);
+        //System.out.print("\n Erosão: r= " + raio + "\n Alt = " + alt + " \n EE = " + EE.length);
 
         boolean trueIgual;
         //EE == percorrer o elemento estruturante
@@ -40,7 +40,7 @@ public class MorfologiaBinaria {
         int [][][]matOut = new int[1][alt][larg];
         int color ;
         int c = img.getChannel();
-        System.out.print("\n Erosão: r= " + raio + "\n Alt = " + alt + " \n EE = " + EE.length);
+        //System.out.print("\n Erosão: r= " + raio + "\n Alt = " + alt + " \n EE = " + EE.length);
 
         boolean trueIgual;
         //EE == percorrer o elemento estruturante

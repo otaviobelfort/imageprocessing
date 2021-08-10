@@ -42,7 +42,7 @@ public class Dithering {
                 for (int x = 0; x < larg; x++) {
                     // temp -> pixel[x][y] + random() 
                     // pertubação aleatória
-                    color = matIn[c][y][x] + (random.nextInt(15) + (-random.nextInt(10)));
+                    color = matIn[c][y][x] + (random.nextInt(128) + (-random.nextInt(128)));
                     matOut[c][y][x] = color < limiar ? BLACK : WHITE;  
 
                 }
