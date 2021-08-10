@@ -26,7 +26,7 @@ public class Dithering {
 
     }
 
-    public static Image modulacaoAleatoria(Image img, int limiar){
+    public static Image limiarodulacaoAleatoria(Image img, int limiar){
         int nChannel = img.getChannel(); 
         int alt = img.getHeight();
         int larg = img.getWidth();
@@ -42,7 +42,7 @@ public class Dithering {
                 for (int x = 0; x < larg; x++) {
                     // temp -> pixel[x][y] + random() 
                     // pertubação aleatória
-                    color = matIn[c][y][x] + (random.nextInt(15) + random.nextInt(-10));
+                    color = matIn[c][y][x] + (random.nextInt(15) + (-random.nextInt(10)));
                     matOut[c][y][x] = color < limiar ? BLACK : WHITE;  
 
                 }
@@ -85,7 +85,7 @@ public class Dithering {
         int i, j;
         // trabalha com 256 niveis de cinza
         Image imgQuantize = Processador.quantize(imgIn, 256,tam*tam);
-        imgQuantize.viewImage("Image Quantize");
+        //imgQuantize.viewImage("Image Quantize");
         int nChannel = imgQuantize.getChannel(); 
         int alt = imgQuantize.getHeight();
         int larg = imgQuantize.getWidth();
@@ -151,39 +151,34 @@ public class Dithering {
     }
 
 
-    public static Image limiarAperiodicoDisperso(Image imgIn, int N[][]){
+    public static Image limiarAperiodicoDisperso(Image imgIn){
         // dimensão
-        int tam = N.length;
         int BLACK = 0;
         int WHITE = 255;
         int i, j;
-      
-        Image imgQuantize = Processador.quantize(imgIn, 256,tam*tam+1);
-        imgQuantize.viewImage("Image Quantize");
-        int nChannel = imgQuantize.getChannel(); 
-        int alt = imgQuantize.getHeight();
-        int larg = imgQuantize.getWidth();
-        int [][][]matIn = imgQuantize.getMatriz();
+
+        int nChannel = imgIn.getChannel(); 
+        int alt = imgIn.getHeight();
+        int larg = imgIn.getWidth();
+        int [][][]matIn = imgIn.getMatriz();
         int [][][]matOut = new int[nChannel][alt][larg];
         int color, error;
+        color = (WHITE + BLACK+1)/2;
         for (int c = 0; c < nChannel; c++) {
             for (int y = 0; y < alt-1; y++) {
-               j = y;
                 for (int x = 0; x < larg-1; x++){
-                    i =  x;
-                    color = matIn[c][y][x];
-                    
-                    matOut[c][y][x] = color < N[i][j] ? BLACK : WHITE;
-                    if(color < N[i][j]){
-                        error = matOut[c][y][x] - BLACK;
+                    //color = matIn[c][y][x];                
+                    //matOut[c][y][x] = color < N[i][j] ? BLACK : WHITE;
+                    if( matIn[c][y][x] < color){
+                        error = matIn[c][y][x] - BLACK;
                         matOut[c][y][x] = BLACK;
                     }else{
-                        error = matOut[c][y][x] - WHITE;
+                        error = matIn[c][y][x] - WHITE;
                         matOut[c][y][x] = WHITE;
                     }
-                    matOut[c][y+1][x] += (3/8)*error;
-                    matOut[c][y][x+1] += (3/8)*error;
-                    matOut[c][y+1][x+1] += (2/8)*error;
+                    matIn[c][y+1][x] += (3/8)*error;
+                    matIn[c][y][x+1] += (3/8)*error;
+                    matIn[c][y+1][x+1] += (2/8)*error;
                 }
 
             }

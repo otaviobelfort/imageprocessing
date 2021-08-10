@@ -224,9 +224,9 @@ public class Main extends JFrame {
         Image imgE = new Image(Main.Image_MASSA);
         imgE.viewImage("Imagem MASSA");
         // limiar simles
-        Dithering.limiarSimples(imgE, limiar[2]).viewImage("Limiar 128");
-        Dithering.limiarSimples(imgE, limiar[1]).viewImage("Limiar 64");
-        Dithering.limiarSimples(imgE, limiar[0]).viewImage("Limiar 16");
+        Dithering.limiarSimples(imgE, limiar[2]).viewImage("Simples - Limiar 128");
+        Dithering.limiarSimples(imgE, limiar[1]).viewImage("Simples - Limiar 64");
+        //Dithering.limiarSimples(imgE, limiar[0]).viewImage("Limiar 16");
 
     }
 
@@ -236,9 +236,9 @@ public class Main extends JFrame {
         Image imgE = new Image(Main.Image_MASSA);
         imgE.viewImage("Imagem MASSA");
         // limiar simles
-       // Dithering.limiarSimples(imgE, limiar[2]).viewImage("Limiar 128");
-        //Dithering.limiarSimples(imgE, limiar[1]).viewImage("Limiar 64");
-        Dithering.limiarSimples(imgE, limiar[0]).viewImage("Limiar 16");
+        Dithering.limiarodulacaoAleatoria(imgE, 128).viewImage("Aleatorio - Limiar 128");
+        Dithering.limiarodulacaoAleatoria(imgE, 64).viewImage("Aleatorio - Limiar 64");
+        //Dithering.limiarSimples(imgE, limiar[0]).viewImage("Limiar 16");
 
     }
 
@@ -272,13 +272,16 @@ public class Main extends JFrame {
     
     // ------ Limiar com modulação ordenada aperiódico 
     private static void imgDitheringAperiodico(){
-        int limiar[] = {16, 64, 128};
-        Image imgE = new Image(Main.Image_MASSA);
-        imgE.viewImage("Imagem MASSA");
-        Dithering.limiarSimples(imgE, limiar[0]).viewImage("Limiar 16");
-
+        int N2[][] = {{6, 8, 4}, {1, 0, 3}, {5, 2, 7}};
+        Image imgA = new Image("imagens/ariele.png");
+        imgA.viewImage("Imagem ariele");
+        Dithering.limiarAperiodicoDisperso(imgA).viewImage("Aperiodico Disperso");
+   
     }
-    
+
+    // ----------------------------------------------
+    // ---- ### Morfologia matemática binária
+    // ---------------------------------------------- 
     private static void imgMorfologiaBinariaErosao(){
 
         Image imgB = new Image("imagens/b.png");
@@ -288,7 +291,7 @@ public class Main extends JFrame {
         int EE[][] = {{0, 0, 255, 0, 0}, {0, 255, 255, 255, 0}, {
             255, 255, 255, 255, 255}, {0, 255, 255, 255, 0}, {0, 0, 255, 0, 0}};
 
-        MorfologiaBin.erosao(imgB, EE1).viewImage("Image Erosão");
+        MorfologiaBinaria.erosao2(imgB, EE1).viewImage("Image Erosão");
     }
     private static void imgMorfologiaBinariaDilatacao(){
 
@@ -297,7 +300,7 @@ public class Main extends JFrame {
         imgB.viewImage("Imagem B");
         int EE[][] = {{255,255,255}, {255,255,255}, {255,255,255}};
         
-        MorfologiaBinaria.erosao2(imgB, EE).viewImage("Image B - Erosão");
+        MorfologiaBinaria.dilatacao(imgB, EE).viewImage("Image B - Erosão");
     }
 
     
